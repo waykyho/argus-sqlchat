@@ -3,5 +3,5 @@ export interface Assistant {
   name: string;
   description: string;
   avatar: string;
-  getPrompt: (input?: string) => string;
+  getPrompt: (schema: string, selfDefinePrompt?: string) => string;
 }

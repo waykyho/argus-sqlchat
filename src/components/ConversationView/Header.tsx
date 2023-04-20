@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useConversationStore, useLayoutStore } from "@/store";
 import useDarkMode from "@/hooks/useDarkmode";
 import Icon from "../Icon";
-import GitHubStarBadge from "../GitHubStarBadge";
+// import GitHubStarBadge from "../GitHubStarBadge";
 
 interface Props {
   className?: string;
@@ -34,16 +34,15 @@ const Header = (props: Props) => {
           <Icon.IoIosMenu className="text-gray-600 w-full h-auto" />
         </button>
         <span className="w-auto text-left block lg:hidden">{title}</span>
-        <GitHubStarBadge className="hidden lg:flex ml-2" />
+        {/* <GitHubStarBadge className="hidden lg:flex ml-2" /> */}
       </div>
       <span className="w-auto text-center h-8 p-1 hidden lg:block">{title}</span>
       <div className="mr-2 sm:mr-3 relative flex flex-row justify-end items-center">
         <a
-          href="https://www.bytebase.com?source=sqlchat"
+          href="#"
           className="flex flex-row justify-center items-center h-10 px-3 py-1 rounded-md whitespace-nowrap hover:bg-gray-100 dark:hover:bg-zinc-700"
-          target="_blank"
         >
-          <img className="h-5 sm:h-6 w-auto" src={isDarkMode ? "/craft-by-bytebase-dark-mode.webp" : "/craft-by-bytebase.webp"} alt="" />
+          AIoT-NL2SQL
         </a>
       </div>
     </div>

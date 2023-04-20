@@ -9,6 +9,7 @@ import {
   useConnectionStore,
   useSettingStore,
   useLayoutStore,
+  useAssistantSelfPromptStateStore,
 } from "@/store";
 import { CreatorRole, Message } from "@/types";
 import { countTextTokens, generateUUID } from "@/utils";
@@ -18,7 +19,7 @@ import MessageView from "./MessageView";
 import MessageTextarea from "./MessageTextarea";
 import DataStorageBanner from "../DataStorageBanner";
 import ProductHuntBanner from "../ProductHuntBanner";
-
+// 核心文件
 // The maximum number of tokens that can be sent to the OpenAI API.
 // reference: https://platform.openai.com/docs/api-reference/completions/create#completions/create-max_tokens
 const MAX_TOKENS = 4000;
@@ -29,6 +30,7 @@ const ConversationView = () => {
   const connectionStore = useConnectionStore();
   const conversationStore = useConversationStore();
   const messageStore = useMessageStore();
+  const assistantStore = useAssistantSelfPromptStateStore();
   const [isStickyAtBottom, setIsStickyAtBottom] = useState<boolean>(true);
   const [showHeaderShadow, setShowHeaderShadow] = useState<boolean>(false);
   const conversationViewRef = useRef<HTMLDivElement>(null);
@@ -126,8 +128,8 @@ const ConversationView = () => {
     };
     messageStore.addMessage(message);
 
+    let schema = "";
     if (connectionStore.currentConnectionCtx?.database) {
-      let schema = "";
       try {
         const tables = await connectionStore.getOrFetchDatabaseSchema(connectionStore.currentConnectionCtx?.database);
         for (const table of tables) {
@@ -139,9 +141,11 @@ const ConversationView = () => {
       } catch (error: any) {
         toast.error(error.message);
       }
-      const promptGenerator = getPromptGeneratorOfAssistant(getAssistantById(currentConversation.assistantId)!);
-      prompt = promptGenerator(schema);
     }
+    const selfPrompt = assistantStore.getPrompt(currentConversation.assistantId);
+    const promptGenerator = getPromptGeneratorOfAssistant(getAssistantById(currentConversation.assistantId)!);
+    prompt = promptGenerator(schema, selfPrompt?.prompt);
+    
     let formatedMessageList = [];
     for (let i = messageList.length - 1; i >= 0; i--) {
       const message = messageList[i];

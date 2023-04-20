@@ -291,14 +291,7 @@ const ConnectionSidebar = () => {
               </button>
             </div>
             <div className="sticky bottom-0 w-full flex justify-center bg-gray-100 dark:bg-zinc-700  backdrop-blur bg-opacity-60 pb-6 py-2">
-              <a
-                href="https://discord.gg/z6kakemDjm"
-                className="text-indigo-600 dark:text-indigo-400 text-sm font-medium flex flex-row justify-center items-center hover:underline"
-                target="_blank"
-              >
-                <Icon.BsDiscord className="w-4 h-auto mr-1" />
-                {t("social.join-discord-channel")}
-              </a>
+              
             </div>
           </div>
         </div>
